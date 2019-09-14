@@ -1,0 +1,55 @@
+<agm-map #mapCont [latitude]="lat" [longitude]="lng" [zoom]="-100">
+  <agm-marker
+    *ngFor="let property of properties$ | async; let i = index"
+    [latitude]="property.location.x"
+    [longitude]="property.location.y"
+    (mouseOver)="mouseOver(infoWindow,mapCont)"
+    [agmFitBounds]="true"
+    fitBounds="true"
+  >
+    <agm-info-window #infoWindow>
+
+        <mat-card class="example-card">
+            <ngb-carousel mat-card-image>
+                <ng-template ngbSlide *ngFor="let image of property.property_images.length > 0 ? property.property_images : defaultImage" >
+                  <div class="picsum-img-wrapper">
+                    <img style="height: 250px; width: 100%;" [src]="image" alt="{{property.landlord_name ? property.landlord_name : 'UnKnown'}}">
+                  </div>
+                </ng-template>
+              </ngb-carousel>
+
+            <mat-card-content>
+                <mat-card-subtitle class="postDate">
+                    <mat-icon>refresh</mat-icon>
+                   {{property.property_postDate | date }}. Ago
+                  </mat-card-subtitle>
+                  <mat-card-title class="card_title">{{property.landlord_name ? property.landlord_name : 'UnKnown'}}</mat-card-title>
+                  <address class="address_field">
+                    {{property.address}}
+                  </address>
+                  <label>{{property.beds}} Bed(s) | {{property.bath}} Baths | {{property.currency}}{{property.price}} </label>
+
+            </mat-card-content>
+          </mat-card>
+      </agm-info-window>
+  </agm-marker>
+
+  <!-- <agm-circle [latitude]="lat" [longitude]="lng"
+  [radius]="mapRadius"
+  [fillColor]="'red'"
+  [circleDraggable]="true"
+  [editable]="true"
+  >
+</agm-circle> -->
+</agm-map>
+
+
+<!-- <agm-map [latitude]="-121.9362006" [longitude]="37.3589431" >
+    <agm-marker *ngFor="let property of properties; let i = index"
+    [latitude]="property.location.x"
+    [longitude]="property.location.y"
+
+     >
+      <agm-info-window>Börk</agm-info-window>
+    </agm-marker>
+  </agm-map> -->

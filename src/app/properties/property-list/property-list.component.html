@@ -1,0 +1,32 @@
+<div class="card-container">
+    <mat-card class="example-card">
+        <ngb-carousel mat-card-image>
+            <ng-template ngbSlide *ngFor="let image of property.property_images.length > 0 ? property.property_images : defaultImage" >
+              <div class="picsum-img-wrapper">
+                <img style="height: 250px; width: 100%;" [src]="image" alt="{{property.landlord_name ? property.landlord_name : 'UnKnown'}}">
+              </div>
+            </ng-template>
+          </ngb-carousel>
+
+        <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
+        <mat-card-content>
+            <mat-card-subtitle class="postDate">
+                <mat-icon>refresh</mat-icon>
+               {{property.property_postDate | date }}. Ago
+              </mat-card-subtitle>
+              <mat-card-title class="card_title">{{property.landlord_name ? property.landlord_name : 'UnKnown'}}</mat-card-title>
+              <address class="address_field">
+                {{property.address}}
+              </address>
+              <label>{{property.beds}} Bed(s) | {{property.bath}} Baths | {{property.currency}}{{property.price}} </label>
+              <br>
+              <label>{{property.pets_allowed}} | {{property.property_type}} | {{property.laundry}}</label>
+
+        </mat-card-content>
+        <mat-card-actions class="card_footer">
+          <button class="vb-margin-r-10" mat-flat-button color="primary">Email Property</button>
+          <button mat-stroked-button color="primary" >{{phNumber}}</button>
+        </mat-card-actions>
+      </mat-card>
+</div>
+

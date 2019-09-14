@@ -1,0 +1,114 @@
+<div class="top_banner_container">
+    <mat-toolbar class="mat-toolbar-container">
+        <mat-toolbar-row>
+          <span class="filter-nav-container col-md-4">
+              <form class="example-form">
+                  <mat-form-field class="example-full-width">
+                    <input type="text"  (keydown.enter)="$event.preventDefault()" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" #search
+                     placeholder="Seach by Location" aria-label="Number" matInput [formControl]="myControl" >
+                    <mat-icon  matSuffix>search</mat-icon>
+                  </mat-form-field>
+                </form>
+          </span>
+          <span class="col-md-8">
+                    <!--begin: Filter -->
+                    <div class="vb-header__topbar-item dropdown" ngbDropdown  class="d-inline-block">
+                        <div class="vb-header__topbar-wrapper" id="filterList" ngbDropdownToggle aria-expanded="true">
+                            Filter
+                          <span class="vb-header__topbar-icon">
+                              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="vb-svg-icon">
+                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                    <rect x="0" y="0" width="24" height="24"/>
+                                    <path d="M5,4 L19,4 C19.2761424,4 19.5,4.22385763 19.5,4.5 C19.5,4.60818511 19.4649111,4.71345191 19.4,4.8 L14,12 L14,20.190983 C14,20.4671254 13.7761424,20.690983 13.5,20.690983 C13.4223775,20.690983 13.3458209,20.6729105 13.2763932,20.6381966 L10,19 L10,12 L4.6,4.8 C4.43431458,4.5790861 4.4790861,4.26568542 4.7,4.1 C4.78654809,4.03508894 4.89181489,4 5,4 Z" fill="#000000"/>
+                                </g>
+                            </svg>
+                          </span>
+                        </div>
+                        <button class="clr-btn" mat-button (click)="initFilterListForm()" >Clear</button>
+                        <div ngbDropdownMenu aria-labelledby="filterList" class="dropdown_wrapper">
+                          <form [formGroup]="filterListForm">
+                              <div class="dropdown_container">
+                                  <ng-container *ngFor="let category of listOfCategories$ | async" >
+                                      <div class="vb-form__heading">
+                                          <h3 class="vb-form__heading-title">{{category.title}}</h3>
+                                      </div>
+                                      <div class="form-group vb-form__group row">
+                                        <ng-container *ngIf="category.isCheckbox === true" >
+                                            <mat-checkbox (change)="filterHandler(category, item, $event.checked)"  *ngFor="let item of category.values"  class="example-margin col-sm-6"  formControlName="{{item.value}}" >{{item.label}} </mat-checkbox>
+                                        </ng-container>
+
+                                        <ng-container *ngIf="category.isOption === true" >
+                                            <mat-radio-group class="example-margin row col-sm-12"  formControlName="{{category.value}}">
+                                                <mat-radio-button (click)="filterHandler(category, item)"  class="col-sm-6 " *ngFor="let item of category.values"  value="{{item.value}}">{{item.label}}</mat-radio-button>
+                                            </mat-radio-group>
+                                        </ng-container>
+
+                                        <ng-container *ngIf="category.isInput === true" >
+                                            <mat-form-field class="example-full-width col-sm-6" *ngFor="let item of category.values">
+                                                <input type="number" matInput placeholder="{{item.label}}" (keyup)="filterHandler(category, item)" formControlName="{{item.value}}">
+                                            </mat-form-field>
+                                        </ng-container>
+
+                                      </div>
+                                  </ng-container>
+                              </div>
+                            <div class="vb-portlet__foot vb-portlet__no-border text-right col-sm-12 filter_footer">
+                                <div class="vb-form__actions vb-form__actions--solid">
+                                    <button mat-raised-button (click)="initFilterListForm()">Clear</button> &nbsp;
+                                    <button mat-raised-button>Done</button>
+                                </div>
+                            </div>
+                          </form>
+
+                        </div>
+
+                      </div>
+
+                      <!--end: Filter -->
+          </span>
+          <!-- <span class="flex-none">
+            <button mat-button>Clear</button>
+          </span> -->
+        </mat-toolbar-row>
+      </mat-toolbar>
+</div>
+
+
+<div class="container-fluid vb-padding-20 content_container">
+    <div class="alert alert-danger"
+    *ngIf="errorMessage$ | async as errorMessage">
+    {{ errorMessage }}
+  </div>
+
+  <div class="spinner_container" *ngIf="viewLoading$ | async">
+  <mat-spinner></mat-spinner>
+</div>
+
+  <div class="col-sm-6 col-md-4 col-lg-6 position-fixed  float-left">
+
+    <ng-container *ngIf="filteredProperties$ | async" >
+        <app-property-location [properties$]="filteredProperties$"></app-property-location>
+    </ng-container>
+
+
+  </div>
+
+  <div class="col-sm-6 col-md-8 col-lg-6 float-right">
+    <div class="listView-container">
+        <!-- <ng-container *ngIf=" properties$ | async"  > -->
+          <ng-container *ngFor="let properties of filteredProperties$ | async" >
+              <app-property-list [property] = "properties">
+                </app-property-list>
+          </ng-container>
+          <ng-container *ngIf="(filteredProperties$ | async)?.length === 0" >
+            <h2 class="no_prop_found">
+              oh! oh!, What you have searched for not exist in the earth!
+              <br>
+              <mat-icon>home</mat-icon>
+            </h2>
+          </ng-container>
+
+        <!-- </ng-container> -->
+    </div>
+  </div>
+</div>
