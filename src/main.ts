@@ -9,8 +9,8 @@ if (environment.production) {
   };
   enableProdMode();
 }
-// window.console.log = window.console.table = function() {
-// };
+window.console.log = window.console.table = function() {
+};
 
 platformBrowserDynamic().bootstrapModule(AppModule)
   .catch(err => console.error(err));
