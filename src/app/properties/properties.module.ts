@@ -34,7 +34,7 @@ const routes: Routes = [
     NgbModule,
     HttpClientModule,
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyDoeNSOLjoKoDRWlHBEKdCcr-22LGNuwSI',
+      apiKey: 'YOUR_KEY',
       libraries: ["places"]
     })
   ]
