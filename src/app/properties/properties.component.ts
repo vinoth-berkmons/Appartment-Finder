@@ -64,13 +64,13 @@ export class PropertiesComponent implements OnInit {
     private mapsAPILoader: MapsAPILoader,
     private ngZone: NgZone
     ) {
-    this.filterCategory();
+    // this.filterCategory();
   }
 
   ngOnInit() {
     console.log(templateValues);
-    // this.initFilterListForm();
-    this.loadProperties();
+     this.initFilterListForm();
+    // this.loadProperties();
 
 
       //load Places Autocomplete
@@ -136,6 +136,7 @@ export class PropertiesComponent implements OnInit {
     });
 
     /* Clear Filters */
+    this.filterCategory();
     this.loadProperties();
 
   }
@@ -180,7 +181,6 @@ export class PropertiesComponent implements OnInit {
       "lat": 0,
       "long": 0
     }
-    this.initFilterListForm();
   }
 
   /* Filter handler from template */
@@ -213,6 +213,9 @@ export class PropertiesComponent implements OnInit {
   applyFilter() {
 
     const filter = this.filterOptions;
+
+    console.log(filter);
+  
 
     const result = this.propertiesCopy;
 
