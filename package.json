@@ -24,7 +24,7 @@
     "@angular/platform-server": "^8.0.2",
     "@angular/router": "^8.0.2",
     "@ng-bootstrap/ng-bootstrap": "^4.2.1",
-    "bootstrap": "4.1.1",
+    "bootstrap": "4.3.1",
     "core-js": "^2.5.4",
     "lodash": "^4.17.15",
     "ng-click-outside": "^5.1.1",
